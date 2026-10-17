@@ -1,0 +1,44 @@
+/* Mobile learning: one drawer, one conversation, one composer. */
+.mobileStudyMenu{display:none}
+.learningDrawer{padding:0;border:0;border-radius:0;margin:0;position:fixed;inset:0 auto 0 0;width:min(86vw,340px);max-width:none;height:100dvh;max-height:none;background:#f8faf8;color:#294d3b}
+.learningDrawer::backdrop{background:rgb(20 35 27 / 26%)}
+.learningDrawer .drawerContent{height:100%;display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));box-sizing:border-box}
+.learningDrawer .sidebarHeading{display:flex;justify-content:space-between;align-items:center;padding:4px 8px 22px;font-size:18px}
+.learningDrawer button{font:inherit;cursor:pointer;color:inherit}
+.learningDrawer .sidebarHeading button{border:0;background:transparent;font-size:26px;width:44px;height:44px}
+.learningDrawer nav{display:grid;gap:5px}
+.learningDrawer nav button,.learningDrawer .sidebarScroll section>button{display:flex;gap:12px;align-items:center;width:100%;min-height:46px;border:0;border-radius:12px;background:transparent;padding:11px 12px;text-align:left;font-size:15px}
+.learningDrawer nav .sidePrimary,.learningDrawer button:hover{background:#eaf1eb}
+.learningDrawer .lexIcon{width:21px;height:21px;flex:none}
+.learningDrawer .sidebarScroll{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain}
+.learningDrawer section{margin-top:24px}
+.learningDrawer h2{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:500;color:#7a8b80;padding:0 12px}
+.learningDrawer h2 button{background:none;border:0;padding:8px;font-size:12px}
+.learningDrawer .sidebarScroll span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.learningDrawer .sidebarScroll p{padding:0 12px;font-size:12px;color:#849187;line-height:1.7}
+.learningDrawer .sidebarBottom{display:flex;gap:16px;border-top:1px solid #e0e8e2;padding:14px 10px 8px}
+.learningDrawer .sidebarBottom button,.drawerAccount{border:0;background:transparent;font-size:13px;padding:9px;text-align:left}
+.drawerAccount{margin-top:6px;min-height:44px}
+body.learningDrawerOpen{overflow:hidden}
+@media(max-width:999px){
+body.assistantMode:has(.learningSidebar) .siteHeader{height:58px;min-height:58px;margin:0 16px;padding:0}
+body.assistantMode:has(.learningSidebar) main{max-width:none!important;margin:0!important;padding:0 14px calc(8px + env(safe-area-inset-bottom))!important}
+body.assistantMode:has(.learningSidebar) .studySplit{display:block;max-width:760px;margin:auto}
+body.assistantMode:has(.learningSidebar) .assistantWorkspace{height:calc(100dvh - var(--learning-shell-top,72px) - 12px - env(safe-area-inset-bottom));min-height:0!important;display:flex;flex-direction:column}
+body.assistantMode:has(.learningSidebar) .lexWorkspaceHeader{flex:none;padding:4px 0 12px}
+.mobileStudyMenu{display:block;flex:none;border:0;background:transparent;font-size:23px;min-width:44px;min-height:44px;border-radius:10px;color:#385e49}
+body.assistantMode:has(.learningSidebar) .lexControls{gap:8px}
+body.assistantMode:has(.learningSidebar) .homeTools,body.assistantMode:has(.learningSidebar) .learningNavigation{display:none!important}
+body.assistantMode:has(.learningSidebar) .workspaceTools .newChat{display:none}
+body.assistantMode:has(.learningSidebar) .assistantBox{flex:1;min-height:0;display:flex;flex-direction:column;margin:0!important;padding:0!important}
+body.assistantMode:has(.learningSidebar) .assistantConversation{flex:1;min-height:0;max-height:none!important;overflow:auto;overscroll-behavior:contain}
+body.assistantMode:has(.learningSidebar) .isLanding .assistantConversation{display:flex;align-items:center;justify-content:center}
+body.assistantMode:has(.learningSidebar) .learningWelcome{margin:0;padding:24px 12px;text-align:center}
+body.assistantMode:has(.learningSidebar) .learningWelcome h2{font-size:25px}
+body.assistantMode:has(.learningSidebar) .homeResume,body.assistantMode:has(.learningSidebar) .assistantUtilities{display:none}
+body.assistantMode:has(.learningSidebar) .learningStarters{order:1;display:flex!important;flex:none;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;margin:10px 0!important;padding:2px 0 6px;scrollbar-width:none}
+body.assistantMode:has(.learningSidebar) .learningStarters button{flex:none;white-space:nowrap;min-height:42px;padding:10px 13px}
+body.assistantMode:has(.learningSidebar) .assistantComposer{order:2;flex:none;margin:0;padding:12px 14px;border-radius:22px}
+body.assistantMode:has(.learningSidebar) .assistantComposer textarea{min-height:48px!important;max-height:140px;height:48px;font-size:16px}
+body.assistantMode:has(.learningSidebar) #materialProgress{order:3;flex:none}
+}
