@@ -84,7 +84,7 @@ async function recordAnswer(status,selected=null){
  if(epoch!==accountEpoch)return;Object.assign(word,saved);const cloud=words.find(w=>w.id===word.id);if(cloud)Object.assign(cloud,saved);progress[word.id]=status;answerBusy=false;if(typeof saveVocabularyResume==='function')saveVocabularyResume(true);showAnswerFeedback(status,selected);}
  catch(e){if(epoch===accountEpoch){answerBusy=false;document.querySelectorAll('.vocabularyScope select').forEach(el=>el.disabled=false);alert('学习进度未保存，请重试：'+e.message)}}
 }
-function setSync(ok){cloudOnline=ok;syncState.className="sync compactSync "+(ok?"on":"off");syncState.textContent=ok?"已同步":"未同步"}
+function setSync(ok){cloudOnline=ok;syncState.className="sync compactSync "+(ok?"on":"off");syncState.textContent=ok?"词汇已同步":"词汇未同步"}
 async function sb(path,opt={}){
  const epoch=accountEpoch;const {data,error}=await authClient.auth.getSession();
  if(error||!data.session||!session||data.session.user.id!==session.user.id)throw new Error('请重新登录');
@@ -256,7 +256,7 @@ function renderCurrent(){
 <script src="vendor/dompurify-3.4.17.js"></script>
 <script src="note-media.js?v=1.0"></script>
 <script src="note-editor.js?v=1.1"></script>
-<script src="course-workspace.js?v=1.1"></script>
+<script src="course-workspace.js?v=1.2"></script>
 <script src="welcome.js?v=1.2"></script>
 <script src="own-ai.js?v=4.0"></script>
 <script src="education-catalog.js?v=3.8"></script>
