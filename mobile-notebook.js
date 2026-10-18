@@ -1,5 +1,5 @@
 // Mobile presentation only: viewport sizing and scroll chrome; no note or network writes.
-let mobileNoteScrollY=0,mobileNoteScrollTravel=0,mobileNoteDirection=0,mobileNoteFrame=0;
+let mobileNoteScrollY=0,mobileNoteScrollTravel=0,mobileNoteDirection=0,mobileNoteFrame=0,mobileNoteQuietUntil=0;
 function mobileViewportMetrics(view,layoutHeight){
  const height=Math.max(180,Number(view?.height)||Number(layoutHeight)||600),top=Math.max(0,Number(view?.offsetTop)||0);
  return {height,top,keyboard:Math.max(0,(Number(layoutHeight)||height)-height)>140};
@@ -10,7 +10,7 @@ function updateMobileViewport(){
  document.body.classList.toggle('mobileKeyboardOpen',metrics.keyboard);
 }
 function setMobileNoteControls(visible){
- document.body.classList.toggle('mobileNoteFocused',!visible);
+ const changed=document.body.classList.contains('mobileNoteFocused')===visible;document.body.classList.toggle('mobileNoteFocused',!visible);if(changed){mobileNoteQuietUntil=Date.now()+220;mobileNoteScrollY=Math.max(0,window.scrollY);mobileNoteScrollTravel=0;}
  const button=document.getElementById('mobileNoteControls');if(button){button.setAttribute('aria-expanded',String(visible));button.textContent=visible?'收起工具':'课程与工具 ↓'}
 }
 function mobileNoteScrollDecision(previous,current,travel,direction){
@@ -23,7 +23,7 @@ function mobileNoteScrollDecision(previous,current,travel,direction){
 function trackMobileNoteScroll(){
  if(!window.matchMedia('(max-width:760px)').matches||!document.body.classList.contains('notebookMode'))return;
  if(document.querySelector('.lexFloatingPanel:not([hidden])')||document.querySelector('.notebookChrome details[open]'))return;
- const y=Math.max(0,window.scrollY),next=mobileNoteScrollDecision(mobileNoteScrollY,y,mobileNoteScrollTravel,mobileNoteDirection);
+ const y=Math.max(0,window.scrollY);if(Date.now()<mobileNoteQuietUntil){mobileNoteScrollY=y;return}const next=mobileNoteScrollDecision(mobileNoteScrollY,y,mobileNoteScrollTravel,mobileNoteDirection);
  mobileNoteScrollY=y;mobileNoteScrollTravel=next.travel;mobileNoteDirection=next.direction;if(next.visible!==null)setMobileNoteControls(next.visible);
 }
 function refreshMobileNotebook(){
