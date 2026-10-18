@@ -105,3 +105,5 @@ body.assistantMode:has(.learningSidebar) #materialProgress{order:3;flex:none}
  .courseMenu,.studyPickerMenu{max-width:calc(100vw - 40px);box-sizing:border-box}
 }
 @media(max-width:999px){.assistantComposer .sendButton{width:44px!important;min-width:44px!important;height:44px!important}.learningStarters button{min-height:44px!important}}
+
+@media(max-width:760px){.courseDialog{max-height:min(88dvh,calc(var(--mobile-view-height,100dvh) - 24px))}.readingPane>header .readerScopeShortcut{font-size:12px;min-height:44px;padding:8px;color:#386249;border:1px solid #dce7df;background:#f6faf7;border-radius:10px}.readingPane>header{padding:8px 12px}}
