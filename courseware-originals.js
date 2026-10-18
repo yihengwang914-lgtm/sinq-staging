@@ -25,7 +25,7 @@ async function attachOriginalPdf(file,source){
 }
 async function saveUploadedOriginal(file,course,week){
  if(!file?.file||!file.path?.toLowerCase().endsWith('.pdf'))return;
- const filename=file.path.split('/').pop(),rows=await sb('user_learning_sources?course_id=eq.'+course+'&week=eq.'+week+'&filename=eq.'+encodeURIComponent(filename)+'&select=id,user_id,original_path,original_sha256&order=created_at.desc&limit=1');
+ const rows=await sb('rpc/resolve_courseware_source',{method:'POST',body:JSON.stringify({p_course:course,p_week:week,p_text:splitCoursewareText(file.text).join('\n')})});
  if(!rows.length)throw Error('课件文字已保存，原始PDF尚未关联');await attachOriginalPdf(file.file,rows[0]);file.originalSaved=true;
 }
 function originalPdfAttachControl(){return '<label class="readerViewToggle">添加原始PDF<input id="coursewareOriginalFile" class="srOnly" type="file" accept="application/pdf,.pdf" onchange="attachVisibleOriginal(this.files[0]);this.value=\'\'"></label>'}
