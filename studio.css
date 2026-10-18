@@ -287,3 +287,5 @@ body.assistantMode.learningSidebarCollapsed:has(.learningSidebar) main{padding-l
 .pickerNoResults{font-size:12px;line-height:1.7;padding:12px;color:#748479;margin:0}.pickerNoResults[hidden]{display:none}
 
 .calendarTrialNotice{max-width:320px;margin:8px 10px;line-height:1.8}.calendarImportLimit{max-width:520px;padding:8px 0}.calendarImportLimit h3{font-size:18px;color:#284b3c}.calendarImportLimit .workspaceRow{flex-wrap:wrap}
+
+.workspaceRow:has(.calendarTrialTools){flex-wrap:wrap}.calendarTrialTools{flex:1 0 100%;display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid #edf1eb;padding-top:12px}.calendarTrialTools .workspaceHint{flex:1 1 230px;margin:0}.calendarTrialTools button{flex:none;min-height:44px}
