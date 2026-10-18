@@ -9,7 +9,7 @@ function initializeNoteEditor(note){
  noteEditorState={key:noteEditorKey(),mode:'edit',undo:null};
  try{const undo=JSON.parse(sessionStorage.getItem('courselex-note-format:'+noteEditorState.key)||'null');if(undo&&typeof undo.before==='string'&&typeof undo.after==='string'&&undo.before.length<=60000&&undo.after.length<=60000)noteEditorState.undo=undo}catch{}
  const surface=document.getElementById('noteSurface');if(surface)surface.dataset.paper=validNotePaper(note.paper_style);
- updateNoteEditorState();if(typeof initializeNoteMedia==='function')initializeNoteMedia();
+ updateNoteEditorState();if(typeof initializeNoteMedia==='function')initializeNoteMedia();if(/!\[[^\]]*\]\(note-media:/.test(note.body||''))setNoteView('read');
 }
 function setNotePaperStyle(paper){
  const value=validNotePaper(paper),input=document.getElementById('notePaperStyle'),surface=document.getElementById('noteSurface');
@@ -21,11 +21,35 @@ function noteHTML(text){
  const html=noteMarkdownParser.parse(String(text)).replace(/<input\b[^>]*type="checkbox"[^>]*>/gi,tag=>/\bchecked(?:\s|=|>)/i.test(tag)?'☑ ':'☐ ');
  return DOMPurify.sanitize(html,{ALLOWED_TAGS:['p','br','h1','h2','h3','h4','h5','h6','strong','b','em','i','del','s','blockquote','ul','ol','li','pre','code','hr','table','thead','tbody','tr','th','td','a'],ALLOWED_ATTR:['href','title','start','colspan','rowspan'],ALLOW_DATA_ATTR:false,ALLOW_ARIA_ATTR:false});
 }
+function noteEditProjection(source){
+ const refs=[];let index=1;
+ const text=String(source).replace(/!\[[^\]]*\]\(note-media:([A-Za-z0-9_-]+)\)/g,(marker,encoded)=>{
+  if(typeof decodeNoteMedia!=='function'||!decodeNoteMedia(encoded))return '[无效图片引用]';
+  let label;do{label='〔图片 '+index+++'〕'}while(source.includes(label));refs.push({label,marker});return label;
+ });return {text,refs};
+}
+function expandNoteEditText(text,refs){let body=String(text);for(const ref of refs||[])body=body.split(ref.label).join(ref.marker);return body}
+function syncNoteTextInput(){
+ const editor=document.getElementById('noteTextBody'),body=document.getElementById('noteBody');if(!editor||editor.hidden||!body)return;
+ const refs=noteEditorState.mediaRefs||[];body.value=expandNoteEditText(editor.value,refs);
+ const start=expandNoteEditText(editor.value.slice(0,editor.selectionStart||0),refs).length,end=expandNoteEditText(editor.value.slice(0,editor.selectionEnd||0),refs).length;
+ body.setSelectionRange?.(start,end);
+}
 function setNoteView(mode){
  noteEditorState.mode=mode==='read'?'read':'edit';const body=document.getElementById('noteBody'),preview=document.getElementById('noteReadView');if(!body||!preview)return;
- body.hidden=noteEditorState.mode==='read';preview.hidden=noteEditorState.mode!=='read';if(!preview.hidden){preview.innerHTML=noteHTML(body.value);if(typeof hydrateNoteMedia==='function')hydrateNoteMedia(preview)}
+ let editor=document.getElementById('noteTextBody');if(editor)editor.hidden=true;
+ const projection=noteEditProjection(body.value),visual=noteEditorState.mode==='edit'&&projection.refs.length;
+ const surface=document.getElementById('noteSurface');if(surface)surface.dataset.mediaEditing=String(Boolean(visual));body.hidden=noteEditorState.mode==='read'||Boolean(visual);preview.hidden=noteEditorState.mode!=='read'&&!visual;
+ if(visual){
+  if(!editor){editor=document.createElement('textarea');editor.id='noteTextBody';editor.className=body.className;editor.maxLength=60000;editor.setAttribute('aria-label','笔记文字');editor.placeholder='写下理解…图片位置用简短标记表示';body.after(editor);editor.addEventListener('input',()=>{syncNoteTextInput();scheduleNoteSave();updateNoteEditorState()});editor.addEventListener('paste',event=>{const images=[...(event.clipboardData?.items||[])].filter(i=>i.kind==='file'&&i.type.startsWith('image/')).map(i=>i.getAsFile());if(images.length){event.preventDefault();syncNoteTextInput();insertNoteImages(images)}})}
+  noteEditorState.mediaRefs=projection.refs;editor.maxLength=Math.max(0,60000-(body.value.length-projection.text.length));editor.value=projection.text;editor.hidden=false;
+  preview.innerHTML=noteHTML(projection.refs.map(r=>r.marker).join('\n\n'));
+  const hint=document.getElementById('noteEditorHint');if(hint)hint.textContent='图片显示在文字下方；〔图片 1〕等标记决定插入位置，可移动或删除。';
+ }else if(!preview.hidden)preview.innerHTML=noteHTML(body.value);
+ if(!preview.hidden&&typeof hydrateNoteMedia==='function')hydrateNoteMedia(preview);
  document.querySelectorAll('[data-note-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.noteView===noteEditorState.mode)));
 }
+
 function updateNoteEditorState(){
  const body=document.getElementById('noteBody'),button=document.getElementById('noteFormatUndo'),undo=noteEditorState.undo;
  if(button)button.disabled=!(noteEditorState.key===noteEditorKey()&&undo&&body?.value===undo.after);
@@ -63,9 +87,9 @@ function undoNoteFormatting(){
  input.value=undo.before;noteEditorState.undo=null;try{sessionStorage.removeItem('courselex-note-format:'+noteEditorKey())}catch{}scheduleNoteSave();setNoteView('edit');updateNoteEditorState();document.getElementById('noteEditorHint').textContent='已恢复排版前的内容。';return true;
 }
 function insertNoteMarkup(kind){
- const input=document.getElementById('noteBody');if(!input)return;setNoteView('edit');
+ setNoteView('edit');const projected=document.getElementById('noteTextBody'),input=projected&&!projected.hidden?projected:document.getElementById('noteBody');if(!input)return;
  let start=input.selectionStart,end=input.selectionEnd,selected=input.value.slice(start,end),replacement;
  if(kind==='bold')replacement='**'+(selected||'重点内容')+'**';
  else{start=start===0?0:input.value.lastIndexOf('\n',start-1)+1;const next=input.value.indexOf('\n',end);end=next<0?input.value.length:next;selected=input.value.slice(start,end);const prefix={heading:'## ',list:'- ',todo:'- [ ] ',quote:'> '}[kind];if(!prefix)return;replacement=selected.split('\n').map(line=>prefix+line).join('\n')}
- input.setRangeText(replacement,start,end,'select');scheduleNoteSave();updateNoteEditorState();input.focus();document.querySelector('.noteMoreTools')?.removeAttribute('open');
+ input.setRangeText(replacement,start,end,'select');if(input.id==='noteTextBody')syncNoteTextInput();scheduleNoteSave();updateNoteEditorState();input.focus();document.querySelector('.noteMoreTools')?.removeAttribute('open');
 }
