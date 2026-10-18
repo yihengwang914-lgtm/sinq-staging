@@ -104,3 +104,4 @@ body.assistantMode:has(.learningSidebar) #materialProgress{order:3;flex:none}
  .courseDialog .workspaceRow{flex-wrap:wrap}
  .courseMenu,.studyPickerMenu{max-width:calc(100vw - 40px);box-sizing:border-box}
 }
+@media(max-width:999px){.assistantComposer .sendButton{width:44px!important;min-width:44px!important;height:44px!important}.learningStarters button{min-height:44px!important}}
