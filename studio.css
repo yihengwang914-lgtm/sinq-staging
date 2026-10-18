@@ -277,3 +277,13 @@ body.assistantMode.learningSidebarCollapsed:has(.learningSidebar) main{padding-l
 .noteSurface[data-media-editing=true] #noteReadView{flex:0 1 40%;min-height:100px;border-top:1px solid #e5eadf}
 
 .notebookChrome{display:contents}.mobileNoteControls{display:none}
+
+/* Empty courseware remains a useful step in the learning flow. */
+.readerEmptyState{max-width:430px;margin:auto;padding:32px 24px;text-align:center;display:flex;align-items:center;flex-direction:column;gap:12px}.readerEmptyState .readerEmptyIcon{display:grid;place-items:center;width:48px;height:48px;background:#edf4ee;border-radius:14px;color:#4b7b65}.readerEmptyIcon .lexIcon{width:23px;height:23px}.readerEmptyState small{font-size:12px;overflow-wrap:anywhere}.readerEmptyState h3{font-size:19px;color:#284b3c;line-height:1.5;margin:0}.readerEmptyState p{margin:0;line-height:1.9;max-width:310px}.readerEmptyActions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:6px}.readerEmptyActions button{min-height:44px;white-space:normal}.learningNavigation>button{min-width:0}.learningNavigation>button:nth-child(3){flex:1.4}
+@media(max-width:760px){.readerEmptyState{padding:24px 18px}.readerEmptyState h3{font-size:17px}.readerEmptyState p{font-size:13px}.readerEmptyActions{width:100%}}
+
+.readerEmptyActions .newChat{border:1px solid #dce7df;border-radius:12px;padding:10px 16px;background:transparent;color:#436d59;font:inherit;cursor:pointer}.readerEmptyActions .secondary{border:1px solid #255c47;border-radius:12px;padding:10px 16px;background:#255c47;color:white;font:inherit;cursor:pointer}.readerEmptyActions button:focus-visible{outline:3px solid #95b6a4;outline-offset:3px}.readerEmptyActions button:hover{filter:brightness(.96)}
+
+.pickerNoResults{font-size:12px;line-height:1.7;padding:12px;color:#748479;margin:0}.pickerNoResults[hidden]{display:none}
+
+.calendarTrialNotice{max-width:320px;margin:8px 10px;line-height:1.8}.calendarImportLimit{max-width:520px;padding:8px 0}.calendarImportLimit h3{font-size:18px;color:#284b3c}.calendarImportLimit .workspaceRow{flex-wrap:wrap}
