@@ -34,6 +34,7 @@ async function attachVisibleOriginal(file){
  try{if(status)status.textContent='正在私有保存原始PDF…';const [source]=await sb('user_learning_sources?id=eq.'+id+'&course_id=eq.'+course+'&select=id,user_id,original_path,original_sha256');if(!source)throw Error('请先选择课件');await attachOriginalPdf(file,source);if(session?.user.id!==uid||readingPane.id!==id||workspaceScope()!==course)return;readingPane.pdf=true;readingPane.key='';readingPane.html='';await loadReadingPane();if(status)status.textContent='原始PDF已保存到账号'}catch(e){if(session?.user.id===uid&&status)status.textContent=e.message}
 }
 function resetOriginalPdf(){originalPdfSerial++;const previous=originalPdfState;originalPdfState=null;if(previous?.pdf)void previous.pdf.destroy().catch(()=>{})}
+function originalPdfScale(width,height,available,pixelRatio=1){if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0)throw Error('PDF页面尺寸无效');return Math.min(2,2200/Math.max(width,height),Math.max(.1,Math.max(200,Number(available)||600)/width)*Math.min(3,Math.max(1,Number(pixelRatio)||1)))}
 async function renderOriginalPdf(row,content,controls){
  const uid=session?.user.id,id=row.id,serial=++originalPdfSerial;
  if(!validOriginalPath(row.original_path,uid,id))throw Error('原始PDF路径无效');
@@ -42,7 +43,7 @@ async function renderOriginalPdf(row,content,controls){
  const page=Math.min(state.pdf.numPages,Math.max(1,Number(readingPane.page)||1));readingPane.page=page;
  controls.insertAdjacentHTML('beforeend',renderStudyPicker('originalPdfPage','课件页码',String(page),Array.from({length:state.pdf.numPages},(_,i)=>({value:String(i+1),label:'第 '+(i+1)+' 页'})),chooseOriginalPdfPage));
  content.innerHTML='<article class="readerSlides"><figure id="lecturePage'+page+'"><figcaption>原始PDF · 第 '+page+' / '+state.pdf.numPages+' 页</figcaption><canvas aria-label="课件第 '+page+' 页"></canvas></figure></article>';
- const canvas=content.querySelector('canvas'),p=await state.pdf.getPage(page),base=p.getViewport({scale:1}),scale=Math.min(2,Math.max(.4,(content.clientWidth-32)/base.width)*(window.devicePixelRatio||1)),viewport=p.getViewport({scale});
+ const canvas=content.querySelector('canvas'),p=await state.pdf.getPage(page),base=p.getViewport({scale:1}),scale=originalPdfScale(base.width,base.height,(content.clientWidth||Math.min(1000,Math.max(360,window.innerWidth-48)))-32,window.devicePixelRatio),viewport=p.getViewport({scale});
  if(serial!==originalPdfSerial||session?.user.id!==uid||readingPane.id!==id||!canvas.isConnected)return;
  canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);canvas.style.width='100%';canvas.style.height='auto';
  await p.render({canvasContext:canvas.getContext('2d'),viewport}).promise;
