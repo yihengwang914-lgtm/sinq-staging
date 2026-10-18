@@ -91,3 +91,16 @@ body.assistantMode:has(.learningSidebar) #materialProgress{order:3;flex:none}
  body.assistantMode:has(.learningSidebar) .isLanding .assistantConversation{justify-content:flex-end}
 }
 @media(prefers-reduced-motion:reduce){.notebookMode .notebookChrome{transition:none!important}}
+
+/* Keep header margins inside the phone viewport and avoid iOS input auto zoom. */
+@media(max-width:999px){
+ body .siteHeader{width:calc(100% - 32px)!important;max-width:none!important;margin-left:16px!important;margin-right:16px!important;box-sizing:border-box}
+ body.assistantMode:has(.learningSidebar) .assistantWorkspace{height:calc(var(--mobile-view-height,100dvh) - var(--learning-shell-top,72px) - 12px - env(safe-area-inset-bottom))}
+ .courseDialog input:not([type=checkbox]):not([type=file]),.courseDialog select,.courseDialog textarea,.studyPickerMenu input{font-size:16px}
+ .courseDialog button,.navPanel button,.navPanel a{min-height:44px}
+ .courseDialog>header>button{min-width:44px;flex:none}
+ .courseDialog{padding:18px!important}
+ .courseDialog>header{padding-bottom:12px;margin-bottom:14px}
+ .courseDialog .workspaceRow{flex-wrap:wrap}
+ .courseMenu,.studyPickerMenu{max-width:calc(100vw - 40px);box-sizing:border-box}
+}
