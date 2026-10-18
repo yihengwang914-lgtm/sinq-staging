@@ -177,8 +177,8 @@ body.notebookMode{overflow:hidden}
 .notebookMode .readingPane>header{min-height:52px;padding:0 18px;box-sizing:border-box}
 .readingPane>header>span{font-size:11px;color:#8b9789}
 .notebookPanel{height:100%;min-width:0;min-height:0;display:flex;flex-direction:column;background:#fff;border:1px solid #dfe7df;border-radius:15px;overflow:hidden}
-.notebookPanel>header{min-height:52px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #edf1eb;gap:10px;flex:none}
-.notebookPanel>header>div{display:flex;align-items:center;gap:12px;min-width:0}.notebookPanel>header strong{font-size:14px;font-weight:550;color:#355940}.notebookPanel>header small{font-size:11px;color:#8b9789}.notebookPanel .newChat{background:transparent;border:0;color:#71866e;font-size:12px;min-height:38px;padding:8px}
+.notebookPanel .notebookHeader{min-height:52px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #edf1eb;gap:10px;flex:none}
+.notebookPanel .notebookHeader>div{display:flex;align-items:center;gap:12px;min-width:0}.notebookPanel .notebookHeader strong{font-size:14px;font-weight:550;color:#355940}.notebookPanel .notebookHeader small{font-size:11px;color:#8b9789}.notebookPanel .newChat{background:transparent;border:0;color:#71866e;font-size:12px;min-height:38px;padding:8px}
 .notebookTools{display:flex;gap:10px;align-items:center;padding:12px 18px;flex:none}.notebookTools>#notebookPicker{flex:1;min-width:0}.notebookTools .studyPicker{min-width:0}.notebookTools .studyPicker strong{max-width:80%;font-size:12px}.notebookTools .pickerCaption{display:none}.notebookTools .studyPickerMenu{max-width:100%;width:100%}
 #notebookMount{flex:1;min-height:0;display:flex;flex-direction:column;padding:0 22px 16px}.notebookPanel #workspaceContent{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;overflow:auto}.notebookPanel .workspaceRow{margin:0;flex:none}.notebookPanel #noteSaveStatus{font-size:11px;color:#879480}.notebookPanel #noteTitle{width:100%;box-sizing:border-box;padding:10px 0;border:0;border-radius:0;border-bottom:1px solid #eef1ea;background:white;font-size:22px;color:#36573d;font-weight:550;outline-offset:2px;flex:none}.notebookPanel #noteBody{width:100%;box-sizing:border-box;flex:1;min-height:110px!important;height:auto!important;resize:none;margin:0;padding:12px 0;border:0;border-radius:0;background-color:white;color:#405b46;font-size:15px;line-height:1.95;outline-offset:2px;overflow:auto}.notebookPanel details{flex:none;font-size:12px;color:#879480}.notebookPanel #notePreview{color:#4c644e;font-size:14px;line-height:1.9}.notebookPanel .workspaceNoteActions{gap:8px}.notebookPanel .workspaceNoteActions .secondary{font-size:12px;min-height:36px;padding:8px 15px;border-radius:9px}
 .lexOrb{position:fixed;right:24px;bottom:22px;width:54px;height:54px;border-radius:50%;border:1px solid #d7e8d9;background:linear-gradient(145deg,#40795a,#23563e);color:#fff;box-shadow:0 6px 22px #1b533535;z-index:150;cursor:pointer;font-size:13px;font-weight:550;letter-spacing:.2px}.lexOrb:hover{background:#326c4d;transform:translateY(-1px)}.lexOrb:focus-visible{outline:3px solid #a8cbb0;outline-offset:4px}
@@ -188,7 +188,7 @@ body.notebookMode{overflow:hidden}
 .notebookMode .lexFloatingPanel .assistantWorkspace{min-height:0!important;max-width:none;margin:0;padding:0;height:100%;flex:1;display:flex;flex-direction:column;overflow:hidden}.lexFloatingPanel .assistantBox{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden}.notebookMode .lexFloatingPanel .assistantConversation{flex:1;min-height:0!important;max-height:none!important;overflow:auto!important;padding:14px 17px;gap:22px}.lexFloatingPanel .assistantComposer{flex:none;margin:0 12px 12px;padding:12px;border-radius:14px}.lexFloatingPanel .assistantComposer textarea{min-height:48px;max-height:100px;font-size:14px}.lexFloatingPanel .chatMessage{font-size:13px}.lexFloatingPanel .learningBackdrop{position:absolute}.lexFloatingPanel .learningDrawer{position:absolute}
 @media(max-width:760px){.notebookMode main{padding:8px!important}.notebookMode .studySplit.splitOpen{display:block;height:calc(100dvh - var(--notebook-top,112px) - 8px)}.notebookMode .splitOpen[data-mobile-panel=reader]>.notebookPanel{display:none}.notebookMode .splitOpen[data-mobile-panel=notebook]>.readingPane{display:none}.notebookMode .splitOpen>.notebookPanel,.notebookMode .splitOpen>.readingPane{height:100%}.notebookMode .splitMobileTabs{display:flex;margin:6px 12px;flex:none}.notebookMode .lexFloatingPanel>.splitMobileTabs{display:none}.notebookMode .readingPane>header>span{display:none}.notebookTools{padding:8px 14px}#notebookMount{padding:0 16px 12px}.notebookPanel #noteTitle{font-size:20px}.notebookPanel #noteBody{font-size:16px}.lexOrb{right:16px;bottom:16px}.notebookMode .lexFloatingPanel{right:12px;bottom:80px;width:calc(100vw - 24px);height:calc(100dvh - 100px)}.notebookMode .siteHeader{padding:0 16px}.notebookPanel .workspaceNoteActions{padding-right:55px}}
 .notebookMode.assistantMode .siteFooter.signature{display:none!important}
-.notebookMode .readingPane>header,.notebookMode .notebookPanel>header{height:52px;flex:0 0 52px;min-height:52px;width:100%;max-width:none;margin:0;box-sizing:border-box}
+.notebookMode .readingPane>header,.notebookMode .notebookPanel .notebookHeader{height:52px;flex:0 0 52px;min-height:52px;width:100%;max-width:none;margin:0;box-sizing:border-box}
 .notebookMode .lexFloatingHeader{height:52px;flex:0 0 52px;min-height:52px;width:100%;max-width:none;margin:0;box-sizing:border-box}
 .notebookMobileViews{display:none}
 @media(max-width:760px){
@@ -207,8 +207,8 @@ body.notebookMode{overflow:hidden}
  .splitOpen[data-mobile-panel=stacked] .readingControls .readerViewToggle{display:none}
  .splitOpen[data-mobile-panel=stacked] .readingControls .studyPicker>summary{min-height:32px;padding:6px 8px}
  .splitOpen[data-mobile-panel=stacked] .readingControls .studyPicker strong{font-size:10px;max-width:82%}
- .notebookMode .splitOpen[data-mobile-panel=stacked] .notebookPanel>header{height:34px;min-height:34px;flex-basis:34px;padding:0 12px}
- .splitOpen[data-mobile-panel=stacked] .notebookPanel>header strong{font-size:12px}
+ .notebookMode .splitOpen[data-mobile-panel=stacked] .notebookPanel .notebookHeader{height:34px;min-height:34px;flex-basis:34px;padding:0 12px}
+ .splitOpen[data-mobile-panel=stacked] .notebookPanel .notebookHeader strong{font-size:12px}
  .splitOpen[data-mobile-panel=stacked] .notebookTools{padding:5px 10px;gap:4px}
  .splitOpen[data-mobile-panel=stacked] .notebookTools .studyPicker>summary{min-height:32px;padding:6px 8px}
  .splitOpen[data-mobile-panel=stacked] .notebookTools .newChat{font-size:10px;min-height:32px;padding:6px}
@@ -275,3 +275,5 @@ body.assistantMode.learningSidebarCollapsed:has(.learningSidebar) main{padding-l
 /* Attachment editing keeps internal image records out of the visible textarea. */
 .noteSurface #noteTextBody{border:0;border-radius:0;min-height:100px;resize:none}
 .noteSurface[data-media-editing=true] #noteReadView{flex:0 1 40%;min-height:100px;border-top:1px solid #e5eadf}
+
+.notebookChrome{display:contents}.mobileNoteControls{display:none}

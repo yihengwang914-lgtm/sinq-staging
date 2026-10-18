@@ -42,3 +42,52 @@ body.assistantMode:has(.learningSidebar) .assistantComposer{order:2;flex:none;ma
 body.assistantMode:has(.learningSidebar) .assistantComposer textarea{min-height:48px!important;max-height:140px;height:48px;font-size:16px}
 body.assistantMode:has(.learningSidebar) #materialProgress{order:3;flex:none}
 }
+
+/* Phone notebook: a continuous page, with tools that leave room for the document. */
+@media(max-width:760px){
+ body.notebookMode{overflow-y:auto;overflow-x:hidden}
+ .notebookMode .siteHeader{height:48px;min-height:48px}
+ .notebookMode main{padding:0!important}
+ .notebookMode .studySplit.splitOpen[data-mobile-panel=notebook]{height:auto!important;min-height:calc(100dvh - 48px);gap:0}
+ .notebookMode .notebookMobileViews{margin:0 12px 8px;width:calc(100% - 24px);min-height:36px}
+ .notebookMode .splitOpen[data-mobile-panel=notebook]>.notebookPanel{display:block;height:auto!important;min-height:calc(100dvh - 96px);border:0;border-radius:0;overflow:visible;background:#fffef8}
+ .notebookMode .splitOpen[data-mobile-panel=notebook] .notebookChrome{display:block;position:sticky;top:0;z-index:90;padding:0 12px;background:#f6f9f5;border-bottom:1px solid #e3e9df;transition:transform .18s ease}
+ .notebookMode .notebookHeader{height:38px;min-height:38px;padding:0;flex-basis:38px;border:0}
+ .notebookMode .notebookHeader small{display:none}
+ .notebookMode .notebookHeader button{min-height:36px}
+ .notebookMode .notebookChrome>.studySyncStatus{display:none}
+ .notebookMode .notebookRangeControls{padding:0;gap:6px}
+ .notebookMode .notebookRangeControls .studyPicker>summary{min-height:36px;padding:6px 9px}
+ .notebookMode .notebookTools{padding:6px 0;gap:8px}
+ .notebookMode .notebookTools .studyPicker>summary{min-height:36px;padding:6px 9px}
+ .notebookMode .splitOpen[data-mobile-panel=notebook] #notebookMount{display:block;padding:0 18px 72px}
+ .notebookMode .splitOpen[data-mobile-panel=notebook] #workspaceContent{display:flex;height:auto;overflow:visible;gap:8px}
+ .notebookMode .splitOpen[data-mobile-panel=notebook] #noteTitle{background:transparent;font-size:22px;padding:16px 0 10px}
+ .notebookMode .splitOpen[data-mobile-panel=notebook] .noteSurface{border:0;border-radius:0;overflow:visible;flex:none;min-height:52dvh;background:transparent}
+ .notebookMode .splitOpen[data-mobile-panel=notebook] #noteSurface .noteCanvas{overflow:visible;flex:none;min-height:52dvh;padding:8px 0!important;border:0;font-size:16px;line-height:1.9}
+ .notebookMode .splitOpen[data-mobile-panel=notebook] #noteSurface #noteBody,.notebookMode .splitOpen[data-mobile-panel=notebook] #noteSurface #noteTextBody{flex:none!important;min-height:240px!important;max-height:none;resize:none;overflow:hidden;background-color:transparent}
+ .notebookMode .splitOpen[data-mobile-panel=notebook] .noteSurface[data-media-editing=true] #noteReadView{max-height:none;flex:none;overflow:visible}
+ .notebookMode .splitOpen[data-mobile-panel=notebook] .noteFormatTools{padding:4px 0;overflow:visible}
+ .notebookMode .workspaceNoteActions{border-top:1px solid #e3e9df;padding-top:10px}
+ .notebookMode .lexOrb{width:46px;height:46px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom))}
+ .notebookMode.mobileNoteFocused .splitOpen[data-mobile-panel=notebook] .notebookChrome{transform:translateY(-100%);pointer-events:none}
+ .notebookMode.mobileNoteFocused .splitOpen[data-mobile-panel=notebook] .mobileNoteControls{display:block;position:fixed;top:calc(var(--mobile-view-top,0px) + 8px);right:12px;z-index:92;border:1px solid #dce5db;background:#f8fbf5ed;backdrop-filter:blur(12px);border-radius:18px;padding:7px 12px;min-height:36px;color:#45634e;font-size:12px}
+ .notebookMode.mobileKeyboardOpen .lexOrb{display:none}
+ .notebookMode .lexFloatingPanel{right:8px;left:8px;width:auto;bottom:auto;top:calc(var(--mobile-view-top,0px) + var(--mobile-view-height,100dvh) - min(440px, calc(var(--mobile-view-height,100dvh)*.74)) - 8px);height:min(440px,calc(var(--mobile-view-height,100dvh)*.74));max-height:calc(var(--mobile-view-height,100dvh) - 16px);border-radius:16px;z-index:160}
+ .notebookMode .lexFloatingHeader{height:40px;min-height:40px;flex-basis:40px;padding:4px 12px}
+ .notebookMode .lexFloatingHeader span{display:none}
+ .notebookMode .lexFloatingHeader strong{flex:1}
+ .notebookMode .lexFloatingPanel .assistantBox{margin:0!important;padding:0!important}
+ .notebookMode .lexFloatingPanel .assistantConversation{padding:8px 12px;gap:14px}
+ .notebookMode .lexFloatingPanel .learningWelcome,.notebookMode .lexFloatingPanel #materialProgress{display:none}
+ .notebookMode .lexFloatingPanel .assistantComposer{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:6px;margin:6px 8px 8px;padding:8px;border-radius:12px}
+ .notebookMode .lexFloatingPanel .assistantComposer textarea{height:40px!important;min-height:40px!important;max-height:72px;line-height:1.5;padding:8px 4px;font-size:16px}
+ .notebookMode .lexFloatingPanel .composerActions{margin:0;min-height:40px;gap:4px}
+ .notebookMode .lexFloatingPanel .attachButton{display:none}
+ .notebookMode .lexFloatingPanel .sendButton{width:36px;min-width:36px;height:36px}
+ .notebookMode .lexFloatingPanel .materialAttachments:empty{display:none}
+ .notebookMode .lexFloatingPanel .materialAttachments:not(:empty),.notebookMode .lexFloatingPanel .dataNote{grid-column:1/-1}
+ body.assistantMode:has(.learningSidebar) .learningWelcome:empty{display:none}
+ body.assistantMode:has(.learningSidebar) .isLanding .assistantConversation{justify-content:flex-end}
+}
+@media(prefers-reduced-motion:reduce){.notebookMode .notebookChrome{transition:none!important}}

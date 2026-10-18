@@ -9,7 +9,7 @@ function initializeNoteEditor(note){
  noteEditorState={key:noteEditorKey(),mode:'edit',undo:null};
  try{const undo=JSON.parse(sessionStorage.getItem('courselex-note-format:'+noteEditorState.key)||'null');if(undo&&typeof undo.before==='string'&&typeof undo.after==='string'&&undo.before.length<=60000&&undo.after.length<=60000)noteEditorState.undo=undo}catch{}
  const surface=document.getElementById('noteSurface');if(surface)surface.dataset.paper=validNotePaper(note.paper_style);
- updateNoteEditorState();if(typeof initializeNoteMedia==='function')initializeNoteMedia();if(/!\[[^\]]*\]\(note-media:/.test(note.body||''))setNoteView('read');
+ updateNoteEditorState();if(typeof initializeNoteMedia==='function')initializeNoteMedia();if(/!\[[^\]]*\]\(note-media:/.test(note.body||''))setNoteView('read');if(typeof refreshMobileNotebook==='function')refreshMobileNotebook();
 }
 function setNotePaperStyle(paper){
  const value=validNotePaper(paper),input=document.getElementById('notePaperStyle'),surface=document.getElementById('noteSurface');
@@ -47,7 +47,7 @@ function setNoteView(mode){
   const hint=document.getElementById('noteEditorHint');if(hint)hint.textContent='图片显示在文字下方；〔图片 1〕等标记决定插入位置，可移动或删除。';
  }else if(!preview.hidden)preview.innerHTML=noteHTML(body.value);
  if(!preview.hidden&&typeof hydrateNoteMedia==='function')hydrateNoteMedia(preview);
- document.querySelectorAll('[data-note-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.noteView===noteEditorState.mode)));
+ document.querySelectorAll('[data-note-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.noteView===noteEditorState.mode)));if(typeof refreshMobileNotebook==='function')refreshMobileNotebook();
 }
 
 function updateNoteEditorState(){
