@@ -249,7 +249,7 @@ function quoteReadingSelection(){
  const text=selection.toString().trim().slice(0,1500);learningDraft='请结合当前课程，帮我理解这段内容：\n“'+text+'”';saveLearningDraft();const prompt=document.getElementById('materialPrompt');prompt.value=learningDraft;if(readingPane.open)toggleNotebookAI(true);prompt.focus();if(status)status.textContent='已放入问题，确认后再发送。';
 }
 
-function fitNotebookViewport(){if(typeof refreshMobileNotebook==='function')refreshMobileNotebook();const root=document.querySelector('.studySplit.splitOpen');if(root){root.style.setProperty('--notebook-top',Math.max(0,root.getBoundingClientRect().top)+'px');const area=document.getElementById('readingScroll');if(area?.clientHeight&&!readingPane.scroll)jumpReadingPage(readingPane.page)}}
+function fitNotebookViewport(){if(typeof scheduleMobileNotebook==='function')scheduleMobileNotebook();const root=document.querySelector('.studySplit.splitOpen');if(root){root.style.setProperty('--notebook-top',Math.max(0,root.getBoundingClientRect().top)+'px');const area=document.getElementById('readingScroll');if(area?.clientHeight&&!readingPane.scroll)jumpReadingPage(readingPane.page)}}
 if(typeof window!=='undefined')window.addEventListener?.('resize',fitNotebookViewport);
 
 function rememberNotebookMode(){try{sessionStorage.setItem('courselex-notebook-mode:'+session.user.id+':'+workspaceScope(),readingPane.open?'1':'0');sessionStorage.setItem('courselex-notebook-week:'+session.user.id+':'+workspaceScope(),String(readingPane.week||''))}catch{}}

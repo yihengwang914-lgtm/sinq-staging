@@ -51,7 +51,7 @@ body.assistantMode:has(.learningSidebar) #materialProgress{order:3;flex:none}
  .notebookMode .studySplit.splitOpen[data-mobile-panel=notebook]{height:auto!important;min-height:calc(100dvh - 48px);gap:0}
  .notebookMode .notebookMobileViews{margin:0 12px 8px;width:calc(100% - 24px);min-height:36px}
  .notebookMode .splitOpen[data-mobile-panel=notebook]>.notebookPanel{display:block;height:auto!important;min-height:calc(100dvh - 96px);border:0;border-radius:0;overflow:visible;background:#fffef8}
- .notebookMode .splitOpen[data-mobile-panel=notebook] .notebookChrome{display:block;position:sticky;top:0;z-index:90;padding:0 12px;background:#f6f9f5;border-bottom:1px solid #e3e9df;transition:transform .18s ease}
+ .notebookMode .splitOpen[data-mobile-panel=notebook] .notebookChrome{display:block;position:sticky;top:0;z-index:90;padding:0 12px;background:#f6f9f5;border-bottom:1px solid #e3e9df;transition:transform .16s ease;will-change:transform}
  .notebookMode .notebookHeader{height:38px;min-height:38px;padding:0;flex-basis:38px;border:0}
  .notebookMode .notebookHeader small{display:none}
  .notebookMode .notebookHeader button{min-height:36px}
@@ -70,8 +70,8 @@ body.assistantMode:has(.learningSidebar) #materialProgress{order:3;flex:none}
  .notebookMode .splitOpen[data-mobile-panel=notebook] .noteFormatTools{padding:4px 0;overflow:visible}
  .notebookMode .workspaceNoteActions{border-top:1px solid #e3e9df;padding-top:10px}
  .notebookMode .lexOrb{width:46px;height:46px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom))}
- .notebookMode.mobileNoteFocused .splitOpen[data-mobile-panel=notebook] .notebookChrome{position:fixed;top:0;left:0;right:0;transform:translateY(-100%);pointer-events:none}
- .notebookMode.mobileNoteFocused .splitOpen[data-mobile-panel=notebook] .mobileNoteControls{display:block;position:fixed;top:calc(var(--mobile-view-top,0px) + 8px);right:12px;z-index:92;border:1px solid #dce5db;background:#f8fbf5ed;backdrop-filter:blur(12px);border-radius:18px;padding:7px 12px;min-height:36px;color:#45634e;font-size:12px}
+ .notebookMode.mobileNoteFocused .splitOpen[data-mobile-panel=notebook] .notebookChrome{transform:translateY(-100%);pointer-events:none}
+ .notebookMode.mobileNoteFocused .splitOpen[data-mobile-panel=notebook] .mobileNoteControls{display:block;position:fixed;top:calc(var(--mobile-view-top,0px) + 8px);right:12px;z-index:92;border:1px solid #dce5db;background:#f8fbf5ed;border-radius:18px;padding:7px 12px;min-height:36px;color:#45634e;font-size:12px}
  .notebookMode.mobileKeyboardOpen .lexOrb{display:none}
  .notebookMode .lexFloatingPanel{right:8px;left:8px;width:auto;bottom:auto;top:calc(var(--mobile-view-top,0px) + var(--mobile-view-height,100dvh) - min(440px, calc(var(--mobile-view-height,100dvh)*.74)) - 8px);height:min(440px,calc(var(--mobile-view-height,100dvh)*.74));max-height:calc(var(--mobile-view-height,100dvh) - 16px);border-radius:16px;z-index:160}
  .notebookMode .lexFloatingHeader{height:40px;min-height:40px;flex-basis:40px;padding:4px 12px}
