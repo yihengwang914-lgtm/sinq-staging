@@ -26,10 +26,10 @@ function renderActiveLearningQuestion(){const pending=pendingLearningQuestion();
 function renderLearningConversation(){
  const el=document.getElementById('assistantConversation');if(!el)return;const messages=learningThread?.messages||[];
  el.innerHTML=messages.length?messages.map(m=>`<article class="chatMessage ${m.role==='user'?'fromUser':'fromLex'+(m.kind==='feedback'?' learningFeedback':'')}" data-message="${esc(m.id)}">${m.role==='assistant'?learningMarkdown(m.content):esc(m.content)}${m.role==='assistant'?learningCitations(m.citations)+learningCoverage(m.coverage)+learningPlan(m.plan)+learningQuizSummary(m.quiz)+(learningThread?.course_id?`<button class="saveNoteAction" onclick="saveMessageNote('${m.id}')">存为笔记</button>`:''):''}</article>`).join(''):`<div class="learningWelcome">${learningLoading?'<p role="status">正在读取学习记录…</p>':''}${renderHomeResume()}</div>`;
- if(learningError)el.innerHTML+=`<div class="learningError" role="alert">${esc(learningError)}${learningPendingRequest?'<button onclick="retryLearningRequest()">重试这一步</button>':'<button onclick="loadLearningHistory(true)">重新加载</button>'}</div>`;
+ if(learningError)el.innerHTML+=`<div class="learningError" role="${assistantBusy?'status':'alert'}">${esc(learningError)}${assistantBusy?'':learningPendingRequest?'<button onclick="retryLearningRequest()">重试这一步</button>':'<button onclick="loadLearningHistory(true)">重新加载</button>'}</div>`;
  else if(messages.at(-1)?.role==='user'&&!assistantBusy&&!learningThread?.pending)el.innerHTML+='<div class="learningError">这条问题还没有完整回复，内容已保存。<button onclick="retrySavedLearningTurn()">继续回答</button></div>';
- if(assistantBusy||learningThread?.pending)el.innerHTML+='<div class="chatMessage fromLex thinking" role="status">莱克正在整理思路…这条对话会自动保存。</div>';
- else el.innerHTML+=renderActiveLearningQuestion();
+ if((assistantBusy||learningThread?.pending)&&!learningError)el.innerHTML+='<div class="chatMessage fromLex thinking" role="status">莱克正在整理思路…这条对话会自动保存。</div>';
+ else if(!assistantBusy&&!learningThread?.pending)el.innerHTML+=renderActiveLearningQuestion();
  const question=el.querySelector?.('.learningQuiz');if(question)el.scrollTop=question.offsetTop-el.offsetTop;else el.scrollTop=el.scrollHeight;
 }
 function learningAvailabilityLabel(){
