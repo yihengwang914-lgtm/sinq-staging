@@ -42,6 +42,8 @@ function showPasswordReset(){
 }
 async function updatePassword(event){event.preventDefault();const {error}=await authClient.auth.updateUser({password:document.getElementById('newPassword').value});if(error)return authNotice(error.message,true);recoveryMode=false;await switchAccount(session);}
 async function logout(){
+ if(typeof flushWorkspace==='function'&&!await flushWorkspace())return;
+ if(typeof flushStudySync==='function')await flushStudySync();
  recoveryMode=false;
  const {error}=await authClient.auth.signOut();if(error)return alert('退出失败：'+error.message);
  if(session)await switchAccount(null);

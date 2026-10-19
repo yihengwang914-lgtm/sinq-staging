@@ -38,7 +38,7 @@ input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);borde
 <link rel="stylesheet" href="brand.css?v=3.4">
 <link rel="stylesheet" href="assistant.css?v=6.0">
 <link rel="stylesheet" href="studio.css?v=20261018-2.0">
-<link rel="stylesheet" href="mobile-study.css?v=1.7">
+<link rel="stylesheet" href="mobile-study.css?v=1.8">
 </head>
 <body>
 <header class="siteHeader">
@@ -49,8 +49,8 @@ input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);borde
     <button class="linkbtn" onclick="showWelcomeGuide()">功能引导</button>
     <button class="linkbtn" onclick="showMaterialsHelp()">上传帮助</button>
     <button class="linkbtn" onclick="showOwnAI()">导入词表</button>
-    <button class="linkbtn" onclick="startDailyStudy(false,assistantScope==='all'?{}:{course:assistantScope})">背单词</button>
-    <button id="syncState" class="sync compactSync off" onclick="syncNow()">未同步</button>
+    <button class="linkbtn" onclick="chooseStudyToolCourse('words')">背单词</button>
+    <button id="syncState" class="linkbtn compactSync" onclick="syncNow()" title="重新加载课程与词汇；笔记保存状态请查看笔记正文上方">刷新课程与词汇</button>
     <a class="linkbtn" href="courselex-user-guide.pdf?v=8.0" target="_blank" rel="noopener">用户指南</a>
     <button class="linkbtn" onclick="showProfile()">我的资料</button>
     <button class="linkbtn" onclick="showInstall()">添加到桌面</button>
@@ -85,7 +85,7 @@ async function recordAnswer(status,selected=null){
  if(epoch!==accountEpoch)return;Object.assign(word,saved);const cloud=words.find(w=>w.id===word.id);if(cloud)Object.assign(cloud,saved);progress[word.id]=status;answerBusy=false;if(typeof saveVocabularyResume==='function')saveVocabularyResume(true);showAnswerFeedback(status,selected);}
  catch(e){if(epoch===accountEpoch){answerBusy=false;document.querySelectorAll('.vocabularyScope select').forEach(el=>el.disabled=false);alert('学习进度未保存，请重试：'+e.message)}}
 }
-function setSync(ok){cloudOnline=ok;syncState.className="sync compactSync "+(ok?"on":"off");syncState.textContent=ok?"词汇已同步":"词汇未同步"}
+function setSync(ok){cloudOnline=ok;syncState.className="linkbtn compactSync";syncState.textContent=ok?"刷新课程与词汇":"重试加载课程与词汇"}
 async function sb(path,opt={}){
  const epoch=accountEpoch;const {data,error}=await authClient.auth.getSession();
  if(error||!data.session||!session||data.session.user.id!==session.user.id)throw new Error('请重新登录');
@@ -108,8 +108,9 @@ async function loadCloud(){
 }
 async function syncNow(){
  if(!session)return showAuth();
- const epoch=accountEpoch;await loadCloud();
- if(epoch===accountEpoch)renderCurrent();
+ if(typeof flushWorkspace==='function'&&!await flushWorkspace())return;
+ const epoch=accountEpoch;if(typeof flushStudySync==='function')await flushStudySync();await loadCloud();
+ if(epoch===accountEpoch&&!document.body.classList.contains('notebookMode'))renderCurrent();
 }
 function countCourse(c){return words.filter(w=>w.course===c).length}
 function setStudyNav(view){const index={home:0,manager:1,unknown:2,known:3}[view];document.querySelectorAll?.('.studyNav button').forEach((b,i)=>b.classList.toggle('active',i===index));}
@@ -259,12 +260,12 @@ function renderCurrent(){
 <script src="vendor/dompurify-3.4.17.js"></script>
 <script src="note-media.js?v=1.1"></script>
 <script src="note-editor.js?v=1.3"></script>
-<script src="course-workspace.js?v=1.7"></script>
+<script src="course-workspace.js?v=1.8"></script>
 <script src="welcome.js?v=1.2"></script>
 <script src="own-ai.js?v=4.0"></script>
 <script src="education-catalog.js?v=3.8"></script>
 <script src="shared-library.js?v=3.6"></script>
-<script src="accounts.js?v=4.5"></script>
+<script src="accounts.js?v=4.6"></script>
 <script src="install.js?v=3.1"></script>
 </body>
 </html>
