@@ -10,7 +10,7 @@
     const theme = preference === 'system' ? (media.matches ? 'dark' : 'light') : preference;
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#17211e' : '#f5f7f6');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#212121' : '#f5f7f6');
     document.querySelectorAll('[data-appearance]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.appearance === preference)));
     const label = document.getElementById('appearanceLabel');
     if (label) label.textContent = ({system:'跟随系统',light:'浅色',dark:'深色'})[preference];
