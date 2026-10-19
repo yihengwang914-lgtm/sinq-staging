@@ -231,7 +231,7 @@ async function refreshOpenWorkspaceNote(){
  if(!document.getElementById('noteBody'))return;noteRefreshFlight=true;
  try{const rows=await sb('user_course_notes?id=eq.'+id+'&course_id=eq.'+course);
   if(session?.user.id!==uid||workspaceEpoch!==epoch||workspaceNote?.id!==id||workspaceNote.version!==version||workspaceDirty||workspaceSaving||document.visibilityState==='hidden'||['noteTitle','noteBody','noteTextBody'].includes(document.activeElement?.id))return;
-  const remote=rows[0];if(remote&&remote.version>version){workspaceNotes=[remote,...workspaceNotes.filter(n=>n.id!==id)];editWorkspaceNote(id);document.getElementById('noteSaveStatus').textContent='已载入另一设备更新 · 本篇笔记已同步'}
+  const remote=rows[0];if(remote&&remote.version>version){const reading=document.querySelector?.('[data-note-view="read"]')?.getAttribute('aria-pressed')==='true';workspaceNotes=[remote,...workspaceNotes.filter(n=>n.id!==id)];editWorkspaceNote(id);if(reading&&typeof setNoteView==='function')setNoteView('read');document.getElementById('noteSaveStatus').textContent='已载入另一设备更新 · 本篇笔记已同步'}
  }catch{const status=document.getElementById('noteSaveStatus');if(status&&session?.user.id===uid&&workspaceEpoch===epoch&&workspaceNote?.id===id&&!workspaceDirty&&!workspaceSaving)status.textContent='暂时无法检查其他设备更新；当前笔记未改动'}finally{noteRefreshFlight=false}
 }
 async function resumeWorkspaceNoteSync(){if(!session||!workspaceNote||!document.getElementById('noteBody'))return;if(workspaceDirty){const conflict=document.getElementById('noteConflict');if(conflict&&!conflict.hidden)return;await saveWorkspaceNote()}else await refreshOpenWorkspaceNote()}
