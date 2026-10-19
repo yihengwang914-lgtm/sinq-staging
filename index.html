@@ -8,6 +8,7 @@
 <title>【预发布】SINQ · 奇点 · 每一个知识点，都是新的起点。</title>
 <meta name="description" content="SINQ · 奇点：上传课堂课件，让莱克讲解知识点、整理重点、出题批改并安排复习。每一个知识点，都是新的起点。">
 <meta name="theme-color" content="#f5f7f6">
+<script src="appearance.js?v=1.0"></script>
 <link rel="manifest" href="manifest.webmanifest?v=3.6">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon-v2.png?v=3.5">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-v2.png?v=3.5">
@@ -39,10 +40,12 @@ input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);borde
 <link rel="stylesheet" href="assistant.css?v=6.0">
 <link rel="stylesheet" href="studio.css?v=20261019-2.1">
 <link rel="stylesheet" href="mobile-study.css?v=1.8">
+<link rel="stylesheet" href="appearance.css?v=1.0">
 </head>
 <body>
 <header class="siteHeader">
   <a class="brand brandLockup" href="./" onclick="navigateLearningHome();return false" aria-label="SINQ · 奇点 首页"><img src="assets/brand/courselex-mark.png" alt="" width="44" height="44"><span><strong>奇点</strong><small>SINQ</small></span></a>
+  <details class="appearanceControl navMenu" id="appearanceControl"><summary aria-label="显示外观"><span aria-hidden="true">◐</span><span id="appearanceLabel">跟随系统</span></summary><div class="appearancePanel"><strong>显示外观</strong><div class="appearanceOptions" role="group" aria-label="选择显示外观"><button type="button" data-appearance="light" aria-pressed="false" onclick="setSinqAppearance('light')">浅色</button><button type="button" data-appearance="dark" aria-pressed="false" onclick="setSinqAppearance('dark')">深色</button><button type="button" data-appearance="system" aria-pressed="true" onclick="setSinqAppearance('system')">系统</button></div><p id="appearanceStatus" role="status">跟随设备，或选择适合当前光线的显示方式</p></div></details>
   <div class="top" id="userNav" hidden>
     <nav class="studyNav" aria-label="学习导航"><button class="active" onclick="navigateStudy('home',this)">首页</button><button onclick="navigateStudy('manager',this)">资料</button><button onclick="navigateStudy('unknown',this)">生词</button><button onclick="navigateStudy('known',this)">熟词</button></nav>
         <details class="navMenu"><summary>账户 <span aria-hidden="true">⌄</span></summary><div class="navPanel" onclick="this.parentElement.open=false">
